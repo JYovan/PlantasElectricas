@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conecction>
+<host>SERVIDOR</host>
+<user>sa</user>
+<password>Xpertex2014</password>
+<database>plantas</database>
+</conecction>

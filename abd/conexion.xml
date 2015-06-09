@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conecction>
+<!--<host>74.208.228.106</host>
+<user>osef</user>
+<password>Ayr2015</password>-->
+    <host>127.0.0.1</host>
+    <user>sa</user>
+    <password>1234</password>
+    <database>plantas</database>
+</conecction>

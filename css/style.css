@@ -1,0 +1,149 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15-dic-2014, 13:05:17
+    Author     : Administrator
+*/ 
+
+@font-face{ 
+    font-family: xfont;
+    src: url(eurosti.ttf);
+}
+@font-face{ 
+    font-family: ases;
+    src: url(eurosti.ttf);
+}
+@font-face{ 
+    font-family: dv;
+    src: url(eurosti.ttf);
+}
+@font-face{ 
+    font-family: ifg;
+    src: url(eurosti.ttf);
+}
+
+body
+{  
+    /*background:#00386a url("../img/noise.png") repeat;*/  
+    /*background:#333 url("../img/noise.png") repeat;*/  
+    /*background:  url("../img/banco.png") fixed;*/  
+    background: url("../img/banco.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.fig{
+    font-family: ifg;
+    font-size: 18px;
+}
+.fontx{
+    font-family: xfont;
+}
+.asets{
+    font-family: ases;
+}
+.dbfont{
+    font-family: dbfont;
+}
+.cursorhand{
+    cursor: pointer;
+}
+#my_map{
+    background-color: #29d; 
+}
+.gm-style-iw {
+    /*    width: 300px; 
+        min-height: 150px; */
+} 
+.myInfobox {
+    border: solid 1px black;
+    background-color:rgba(255, 255, 255, 0.5);
+    width: 280px;
+    color: #000;
+    font-family: Arial;
+    font-size: 14px;
+    padding: .5em 1em;
+    border-radius: 10px;
+    margin-left: -30px;
+    margin-top: -6px
+} 
+.panel-info {
+    border: none !important;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: Century Gothic, sans-serif !important;
+}
+
+.fontx {
+    font-family: Century Gothic, sans-serif !important;
+}
+
+.table-responsive {
+    border: none !important; 
+}
+
+input, button, select, textarea {
+    font-family: Century Gothic, sans-serif !important;
+}
+
+.select2-container .select2-choice > .select2-chosen {
+
+    font-size: 18px !important;
+}
+th, td { 
+    white-space: nowrap; clear: both;
+    
+}
+thead{
+    width: 100%
+}
+div.dataTables_wrapper {
+    width: 100%;
+    margin: 0 auto;
+}
+
+body { font-size: 140%; }
+div.DTTT { margin-bottom: 0.5em; float: right; }
+div.dataTables_wrapper { clear: both; }
+
+.addMap{
+    position: absolute; 
+    z-index: 50; 
+    margin-top: 320px;
+}
+.addMapCheck{
+    position: absolute; 
+    z-index: 50; 
+    margin-top: 320px;
+    left:63px;
+}
+.addMapDanger{
+    position: absolute; 
+    z-index: 50; 
+    margin-top: 320px;
+    left:98px;
+}
+.addMapSearch{
+    position: absolute; 
+    z-index: 50; 
+    left:40%
+} 
+.cursorhand{
+    cursor: pointer;
+} 
+tr:hover{
+    cursor: pointer;
+    background: #ffcc66;
+} 
+ 
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{
+    cursor: pointer;
+    background-color:#ffcc66;  
+    color: #fff;
+}
