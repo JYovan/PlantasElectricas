@@ -68,7 +68,7 @@ class Data {
                                 session_start();
                                 session_unset();
                                 session_destroy();
-                                header("Location: ../index.php");
+                                header("Location: index.php");
                                 break;
                             case 1:
                                 $pdo->bind("SP_GetDataFromUser", array($txtUsr, $txtPwd));
@@ -204,6 +204,22 @@ class Data {
                                 break;
                             case 41:
                                 $pdo->save("SP_UpdateSucursal", array($IdSucursal));
+                                break;
+                            case 42:
+                                session_start();
+                                if (isset($_SESSION["Usuario"])) {
+                                    extract($_SESSION);
+                                }else{
+                                    var_dump($_SESSION);
+                                }
+                                break;
+                            case 43: 
+                                session_start();
+                                if (isset($_SESSION["Usuario"])) {
+                                    extract($_SESSION);
+                                }else{
+                                    var_dump($_SESSION);
+                                }
                                 break;
                             default:
                                 break;

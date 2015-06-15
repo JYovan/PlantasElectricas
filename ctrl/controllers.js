@@ -6,19 +6,10 @@ $(document).ready(function () {
     /*******************************************************************************
      * Funciones para aplicar la busqueda sobre una etiqueta select
      *******************************************************************************/
-    
+
     $("select").select2({
         width: "100%"
     });
-     $("div.toolbar").html("<button type=\"button\" id=\"btnRemoveProveedor\" class=\"btn btn-default disabled\" data-dismiss=\"\"> <span class=\"fa fa-minus-circle\"></span> </button>");
-    /*******************************************************************************
-     * Fin de funciones de busqueda por etiqueta select
-     *******************************************************************************/
-
-    /*******************************************************************************
-     * Eventos Click 
-     *******************************************************************************/
-
     /*******************************************************************************
      * Eventos Click Proveedor
      *******************************************************************************/
@@ -33,10 +24,9 @@ $(document).ready(function () {
     $("#btnUpdateProveedor").click(function () {
         onUpdateSupplier();
         getDataSuppliers();
-        setTimeout(
-                function () {
-                    getDataUsers();
-                }, 1000);
+        setTimeout(function () {
+            getDataUsers();
+        }, 1000);
     });
     $("#btnUpdateProveedorTable").click(function () {
         getDataSuppliers();
@@ -44,15 +34,16 @@ $(document).ready(function () {
     $("#btnCancelProveedor").click(function () {
         onCancelProveedor();
     });
-    var onCancelProveedor = function (){
+    var onCancelProveedor = function () {
         $("#txtProveedor").val("");
         $("#btnSaveProveedor").addClass("disabled").fadeIn("slow");
         $("#btnUpdateProveedor").addClass("disabled").fadeIn("slow");
         $("#btnRemoveProveedor").addClass("disabled").fadeIn("slow");
         $("#tblDataSupplier tbody").find("tr").removeClass("warning");
-    }
+    };
     $("#btnRemoveProveedor").click(function () {
-        $("#messages-supplier").html("<p class=\"text-danger\">Eliminando...</p>").fadeIn("slow").delay(5500).fadeToggle("slow", "linear");;
+        $("#messages-supplier").html("<p class=\"text-danger\">Eliminando...</p>").fadeIn("slow").delay(5500).fadeToggle("slow", "linear");
+        ;
     });
     /*******************************************************************************
      * Eventos Click Usuario
@@ -124,9 +115,16 @@ $(document).ready(function () {
         onUpdatePlanta();
         getDataSucursales();
     });
+    $("#btnUpdateMyPlant").click(function () {
+        getDataFromMyPlants();
+        getDataSucursales();
+    });
     $("#btnUpdateTablePlanta").click(function () {
         getDataPlantas();
         getPlantasByEstatus();
+    });
+    $("#btnUpdateTableMyPlant").click(function () {
+        getDataFromMyPlants();
     });
     $("#btnCancelPlanta").click(function () {
         $("#DatosPlant")[0].reset();
@@ -165,6 +163,12 @@ $(document).ready(function () {
     $("#btnCancelUxS").click(function () {
         onCancelUxS();
     });
+    $("#btnEditType").click(function () {
+        $("#cmbTipo").removeClass("hide");
+        $("#btnFinishEditType").removeClass("hide");
+        $("#lblTipo").addClass("hide");
+        $("#btnEditType").addClass("hide");
+    });
     /*******************************************************************************
      * Eventos Click Graficas
      *******************************************************************************/
@@ -185,7 +189,7 @@ $(document).ready(function () {
         getDataZones();
     });
     $('#mdlProveedores').on('shown.bs.modal', function () {
-        getDataSuppliers(); 
+        getDataSuppliers();
     });
     $('#mdlSucursales').on('shown.bs.modal', function () {
         getDataSucursales();
@@ -195,15 +199,22 @@ $(document).ready(function () {
     $('#mdlMicros').on('shown.bs.modal', function () {
         getDataMicros();
     });
+    $('#mdlMyMicros').on('shown.bs.modal', function () {
+        getDataMyMicros();
+    });
 
     $('#mdlUsuariosXSucursal').on('shown.bs.modal', function () {
         getDataUxS();
         getUserXS();
-        getUXSucursal(); 
+        getUXSucursal();
     });
 
     $('#mdlUserAccount').on('shown.bs.modal', function () {
         getCountPlantByUser();
+        $("#cmbTipo").trigger('change');
+    });
+    $('#mdlMyPlants').on('shown.bs.modal', function () {
+        getDataFromMyPlants();
     });
 
     $("#mdlMicrosToggle").on('shown.bs.modal', function () {
@@ -226,6 +237,7 @@ $(document).ready(function () {
     call.add(getMapByUsr());
     call.add(getMicrosByEstatus());
     call.add(getEstatusPlanta());
+    call.add(getDataFromMyPlants());
     call.fire();
 
 });
@@ -492,7 +504,7 @@ function getDataMicros()
         $("#DataMicro").html(data);
         var tblDataMicro = $("#tblDataMicros").DataTable(tableOptions);
         //Get Row from supplier table
-        $('#tblDataMicros tbody').on('click', 'tr', function () { 
+        $('#tblDataMicros tbody').on('click', 'tr', function () {
             $("#tblDataMicros").find("tr").removeClass("warning");
             var id = this.id;
             var index = $.inArray(id, selected);
@@ -508,6 +520,41 @@ function getDataMicros()
             $("#cmbEstatusMicro").select2("val", dtm[2]);
             $("#btnUpdateMicro").removeClass("disabled");
             $("#btnSaveMicro").addClass("disabled");
+        });
+
+    });
+}
+
+
+/*******************************************************************************
+ * Procesos de Micro
+ * @author Giovanni Flores
+ * @function getDataMicros   
+ * @description Obtiene todos los micros, mostrandolos en una tabla
+ * ****************************************************************************/
+function getDataMyMicros()
+{
+    $.ajax({
+        url: "abd/Data.php",
+        type: "POST",
+        data: {
+            IdProcess: 43,
+            DataTableName: "MxU"
+        }
+    }).done(function (data) {
+        $("#DataMyMicro").html(data);
+        var tblMxU = $("#tblMxU").DataTable(tableOptions);
+        //Get Row from supplier table
+        $('#tblMxU tbody').on('click', 'tr', function () {
+            $("#tblMxU").find("tr").removeClass("warning");
+            var id = this.id;
+            var index = $.inArray(id, selected);
+            if (index === -1) {
+                selected.push(id);
+            } else {
+                selected.splice(index, 1);
+            }
+            $(this).toggleClass('warning'); 
         });
 
     });
@@ -841,7 +888,6 @@ function onCheckPlanta(txtPlant)
     });
 }
 
-
 /*******************************************************************************
  * Procesos de Plantas
  * @author Giovanni Flores
@@ -888,6 +934,41 @@ function getDataPlantas()
             $("#txtMicros").val(dtm[7]);
             $("#btnUpdatePlanta").removeClass("disabled");
             $("#btnSavePlanta").addClass("disabled");
+        });
+    });
+
+}
+
+
+/*******************************************************************************
+ * Procesos de Plantas
+ * @author Giovanni Flores
+ * @function getDataPlantas 
+ * @description Obtiene todas las plantas del usuario actual, mostrandolas en una tabla con herramientas
+ * ****************************************************************************/
+function getDataFromMyPlants()
+{
+    $.ajax({
+        url: "abd/Data.php",
+        type: "POST",
+        data: {
+            IdProcess: 42
+        }
+    }).done(function (data) {
+        $("#DataMisPlantas").html(data);
+        $("#tblDataPxU").DataTable(tableOptions);
+        //Get Row from supplier table
+        $('#tblDataPxU tbody').on('click', 'tr', function () {
+            $("#tblDataPxU").find("tr").removeClass("warning");
+            var id = this.id;
+            var index = $.inArray(id, selected);
+            if (index === -1) {
+                selected.push(id);
+            } else {
+                selected.splice(index, 1);
+            }
+            $(this).toggleClass('warning');
+            $("#btnRemoveMyPlant").removeClass("disabled");
         });
     });
 
@@ -1237,7 +1318,7 @@ function getDataSuppliers()
             $("#btnUpdateProveedor").removeClass("disabled");
             $("#btnSaveProveedor").addClass("disabled");
             $("#btnRemoveProveedor").removeClass("disabled");
-            
+
         });
     });
 }
@@ -1830,7 +1911,7 @@ function onUpdateSucursal()
  * @function onCancelSucursal 
  * @description Resetea el formulario, a su vez deshabilita las acciones principales
  * ****************************************************************************/
-function onCancelSucursal()
+var onCancelSucursal = function ()
 {
     $("#DatosSucursal")[0].reset();
     $("#btnSaveSucursal").addClass("disabled");
@@ -1839,7 +1920,7 @@ function onCancelSucursal()
     $("#cmbPlantas").select2("val", "");
     getPlantasByEstatus();
     getDataSucursales();
-}
+};
 
 /*******************************************************************************
  * Fin de procesos de Sucursales 
@@ -2007,7 +2088,6 @@ function onUpdateUxS()
  * ****************************************************************************/
 function onCancelUxS()
 {
-    
     $("#btnSaveUxS").addClass("disabled");
     $("#btnUpdateUxS").addClass("disabled");
     $("#register-uxs")[0].reset();

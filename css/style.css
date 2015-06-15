@@ -146,4 +146,7 @@ tr:hover{
     cursor: pointer;
     background-color:#ffcc66;  
     color: #fff;
+} 
+td.highlight {
+    background-color: whitesmoke !important;
 }

@@ -32,8 +32,9 @@
         <link href="js/datepicker/datepicker3.css" rel="stylesheet"/>
         <script src="js/datepicker/bootstrap-datepicker.js"></script>
 
-    <?php } ?> 
-    <script src="ctrl/controller.js"></script> 
+    <?php } else{?> 
+    <script src="ctrl/controller.js"></script>
+    <?php }?>
     <script src="js/scripts.js"></script> 
     <link rel="stylesheet" href="css/styler.css">
     <link rel="stylesheet" href="css/style.css">

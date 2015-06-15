@@ -14,8 +14,7 @@ if (isset($_SESSION["Sesion"])) {
                             <div class="panel-heading"><span class="fa fa-info"></span> Panel de control</div>
                             <div class="panel-body">  
                                 <div id="test-data"></div>
-                                <div id="map-result">  
-                                </div> 
+                                <div id="map-result"></div> 
                                 <div id="top-plant" class="list-group">
                                     <a href="#" class="list-group-item">
                                         <h4 class="list-group-item-heading">Novedades</h4>

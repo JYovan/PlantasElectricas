@@ -25,7 +25,7 @@ class Helpers {
     }
 
     function getMap($datamap) {
-        $map = '<button type="button" id="btnRefreshMap" onclick="getMapByUsr()" class="btn btn-sm btn-success addMap"> <span class="fa fa-refresh"></span></button>';
+        $map = '<button type="button" id="btnRefreshMap" onclick="getMapByUsr()" class="btn btn-sm btn-success addMap"> <span class="fa fa-refresh fa-spin"></span></button>';
         $map.='<div id="map" style="width: 100%; height: 350px; border: none; color: #fff !important;" ></div> 
                         <script>
                             var myMarkers = {"markers": [ ';

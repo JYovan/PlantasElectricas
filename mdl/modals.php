@@ -724,14 +724,21 @@
                             <div class="col-xs-12 col-sm-8">
                                 <h2><?php echo (isset($_SESSION["Sesion"]) ? $_SESSION["Usuario"] : header("Location: index.php")); ?></h2>
                                 <p>
-                                    <strong>Tipo de usuario: </strong> 
-                                    <select class="form-control hide" id="cmbTipo"  name="cmbTipo" required="">
+                                    <strong>Tipo de usuario: </strong>  
+                                    <select class="form-control" id="cmbTipo" 
+                                            onchange="$('#cmbTipo').val().trim() ==='' ? $('#cmbTipo').select2('val',  '<?php print $_SESSION["Tipo"]; ?>'):$('#cmbTipo').val();" name="cmbTipo" required="">
                                         <option></option>
-                                    </select><?php print $_SESSION["Tipo"]; ?>      <button type="button" id="btnEditType" class="btn btn-danger " data-dismiss=""><span class="fa fa-pencil"></span></button>
-                                </p>
-
-                                <p><strong>Plantas asignadas: </strong>
+                                        <option>Administrador</option>
+                                        <option>Usuario</option>
+                                    </select> 
+                                     </p> 
+                                <p>
+                                    <strong>Plantas asignadas: </strong>
                                     <span class="label label-info tags"><?php print $_SESSION["PAsignadas"]; ?></span> 
+                                </p>
+                                <p>
+                                    <strong>Proveedor:</strong> 
+                                    <span class="label label-info tags"><?php print $_SESSION["Proveedor"]; ?></span>
                                 </p>
                             </div>
                             <!--/col-->          
@@ -802,8 +809,142 @@
 
 
     <!--End Modal Toggles-->
+    
+<!---Start of my modals--->
+<div class="modal fade" id="mdlMyPlants" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                    <h4 class="modal-title"><span class="fa fa-flash"></span> Mis plantas</h4>
+                </div> 
+                <form class="form-horizontal" id="DatosPlantas">
+                    <div class="modal-body">
+  
+                        <div class="form-group" align="center">
+                            <button type="button" id="btnUpdateMyPlant" class="btn btn-warning disabled " data-dismiss=""><span class="fa fa-pencil"></span></button>   
+                            <button type="button" id="btnUpdateTableMyPlant" class="btn btn-default " data-dismiss=""> <span class="fa fa-refresh"></span> </button> 
+                            <button type="button" id="btnRemoveMyPlant" class="btn btn-default disabled " data-dismiss=""> <span class="fa fa-minus-circle"></span> </button>   
+                            <button type="button" id="btnCancelMyPlant" class="btn btn-danger " data-dismiss=""><span class="fa fa-remove"></span></button>
+                        </div>
+                        <div id="messages-of-my-plant"></div>  
+                        <div id="DataMisPlantas"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button  type="button" class="btn btn-default"   data-dismiss="modal">Cerrar</button>
+                    </div> 
+                </form>   
+            </div>
+        </div>
+    </div>
 
+<div class="modal fade" id="mdlMySuppliers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                    <h4 class="modal-title"><span class="fa fa-ship"></span> Mis Proveedores</h4>
+                </div> 
+                <form class="form-horizontal" id="DataMySupplier">
+                    <div class="modal-body">
+  
+                        <div class="form-group" align="center">
+                            <button type="button" id="btnUpdateMySupplier" class="btn btn-warning disabled " data-dismiss=""><span class="fa fa-pencil"></span></button>   
+                            <button type="button" id="btnUpdateTableMySupplier" class="btn btn-default " data-dismiss=""> <span class="fa fa-refresh"></span> </button> 
+                            <button type="button" id="btnRemoveMySupplier" class="btn btn-default disabled " data-dismiss=""> <span class="fa fa-minus-circle"></span> </button>   
+                            <button type="button" id="btnCancelMySupplier" class="btn btn-danger " data-dismiss=""><span class="fa fa-remove"></span></button>
+                        </div>
+                        <div id="messages-of-my-supplier"></div>  
+                        <div id="DataMySuppliers"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button  type="button" class="btn btn-default"   data-dismiss="modal">Cerrar</button>
+                    </div> 
+                </form>   
+            </div>
+        </div>
+    </div>
 
+<div class="modal fade" id="mdlMyMicros" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                    <h4 class="modal-title"><span class="fa fa-gamepad"></span> Mis Micros</h4>
+                </div> 
+                <form class="form-horizontal" id="DataMyMicro">
+                    <div class="modal-body">
+  
+                        <div class="form-group" align="center">
+                            <button type="button" id="btnUpdateMyMicro" class="btn btn-warning disabled " data-dismiss=""><span class="fa fa-pencil"></span></button>   
+                            <button type="button" id="btnUpdateTableMyMicro" class="btn btn-default " data-dismiss=""> <span class="fa fa-refresh"></span> </button> 
+                            <button type="button" id="btnRemoveMyMicro" class="btn btn-default disabled " data-dismiss=""> <span class="fa fa-minus-circle"></span> </button>   
+                            <button type="button" id="btnCancelMyMicro" class="btn btn-danger " data-dismiss=""><span class="fa fa-remove"></span></button>
+                        </div>
+                        <div id="messages-of-my-micro"></div>  
+                        <div id="DataMyMicros"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button  type="button" class="btn btn-default"   data-dismiss="modal">Cerrar</button>
+                    </div> 
+                </form>   
+            </div>
+        </div>
+    </div>
 
+<div class="modal fade" id="mdlMyZones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                    <h4 class="modal-title"><span class="fa fa-thumb-tack"></span> Mis Zonas</h4>
+                </div> 
+                <form class="form-horizontal" id="DataMyZone">
+                    <div class="modal-body">
+  
+                        <div class="form-group" align="center">
+                            <button type="button" id="btnUpdateMyZones" class="btn btn-warning disabled " data-dismiss=""><span class="fa fa-pencil"></span></button>   
+                            <button type="button" id="btnUpdateTableMyZone" class="btn btn-default " data-dismiss=""> <span class="fa fa-refresh"></span> </button> 
+                            <button type="button" id="btnRemoveMyZone" class="btn btn-default disabled " data-dismiss=""> <span class="fa fa-minus-circle"></span> </button>   
+                            <button type="button" id="btnCancelMyZone" class="btn btn-danger " data-dismiss=""><span class="fa fa-remove"></span></button>
+                        </div>
+                        <div id="messages-of-my-zone"></div>  
+                        <div id="DataMyZones"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button  type="button" class="btn btn-default"   data-dismiss="modal">Cerrar</button>
+                    </div> 
+                </form>   
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="mdlMyBranchOffice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                    <h4 class="modal-title"><span class="fa fa-bank"></span> Mis Sucursales</h4>
+                </div> 
+                <form class="form-horizontal" id="DataMyBranchOffice">
+                    <div class="modal-body">
+  
+                        <div class="form-group" align="center">
+                            <button type="button" id="btnUpdateMyBranchOffice" class="btn btn-warning disabled " data-dismiss=""><span class="fa fa-pencil"></span></button>   
+                            <button type="button" id="btnUpdateTableMyBranchOffice" class="btn btn-default " data-dismiss=""> <span class="fa fa-refresh"></span> </button> 
+                            <button type="button" id="btnRemoveMyBranchOffice" class="btn btn-default disabled " data-dismiss=""> <span class="fa fa-minus-circle"></span> </button>   
+                            <button type="button" id="btnCancelMyBranchOffice" class="btn btn-danger " data-dismiss=""><span class="fa fa-remove"></span></button>
+                        </div>
+                        <div id="messages-of-my-branchoffice"></div>  
+                        <div id="DataMyBranchOffices"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button  type="button" class="btn btn-default"   data-dismiss="modal">Cerrar</button>
+                    </div> 
+                </form>   
+            </div>
+        </div>
+    </div>
+    <!--- End of my modals ---->
     <?php
 }
