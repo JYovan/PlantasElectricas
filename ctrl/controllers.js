@@ -258,11 +258,13 @@ function getHistory(pl) {
     $.ajax({
         url: "abd/Data.php",
         type: "POST",
+        dataType: "JSON",
         data: {
             IdProcess: 2,
             txtPlanta: pl
         }
     }).done(function (data) {
+        var tblName = "tblDataHistory";
         $("#history-data").html("<div align=\"center\">" +
                 "<fieldset>" +
                 "<legend>Filtrado por fecha</legend>" +
@@ -287,10 +289,10 @@ function getHistory(pl) {
                 "<div id='messages-filter-history'>" +
                 "</div>" +
                 "</div>" +
-                "<br>" + data);
-        $('#tblDataHistory').DataTable(tableOptions);
-        $('#tblDataHistory tbody').on('click', 'tr', function () {
-            $("#tblDataHistory").find("tr").removeClass("warning");
+                "<br>" + getTable(tblName, data));
+        $('#' + tblName).DataTable(tableOptions);
+        $('#' + tblName + ' tbody').on('click', 'tr', function () {
+            $("#" + tblName).find("tr").removeClass("warning");
             var id = this.id;
             var index = $.inArray(id, selected);
             if (index === -1) {
@@ -310,15 +312,6 @@ function onFilterByDateHistory(datestart, datend) {
     } else {
         $("#messages-filter-history").html("Campo de fecha invalidos. Fecha inicio: " + datestart + ", Fecha fin:" + datend + " ");
     }
-}
-/*******************************************************************************
- * Procesos de History
- * @author Giovanni Flores
- * @function fillHistory
- * @description Crea una tabla con herramientas de paginación, filtro por columna y busqueda por criterio
- * ****************************************************************************/
-function fillHistory()
-{
 }
 
 
@@ -484,8 +477,6 @@ function onUpdateMicro() {
                 "</div>");
     }
 }
-
-
 /*******************************************************************************
  * Procesos de Micro
  * @author Giovanni Flores
@@ -497,15 +488,17 @@ function getDataMicros()
     $.ajax({
         url: "abd/Data.php",
         type: "POST",
+        dataType: "JSON",
         data: {
             IdProcess: 25
         }
     }).done(function (data) {
-        $("#DataMicro").html(data);
-        var tblDataMicro = $("#tblDataMicros").DataTable(tableOptions);
+        var tblName = "tblDataMicros";
+        $("#DataMicro").html(getTable(tblName, data));
+        var tblDataMicro = $("#" + tblName).DataTable(tableOptions);
         //Get Row from supplier table
-        $('#tblDataMicros tbody').on('click', 'tr', function () {
-            $("#tblDataMicros").find("tr").removeClass("warning");
+        $('#' + tblName + ' tbody').on('click', 'tr', function () {
+            $("#" + tblName).find("tr").removeClass("warning");
             var id = this.id;
             var index = $.inArray(id, selected);
             if (index === -1) {
@@ -524,8 +517,6 @@ function getDataMicros()
 
     });
 }
-
-
 /*******************************************************************************
  * Procesos de Micro
  * @author Giovanni Flores
@@ -542,11 +533,11 @@ function getDataMyMicros()
             DataTableName: "MxU"
         }
     }).done(function (data) {
-        $("#DataMyMicro").html(data);
-        var tblMxU = $("#tblMxU").DataTable(tableOptions);
+        $("#DataMyMicros").html(data);
+        var tblDataMxU = $("#tblDataMxU").DataTable(tableOptions);
         //Get Row from supplier table
-        $('#tblMxU tbody').on('click', 'tr', function () {
-            $("#tblMxU").find("tr").removeClass("warning");
+        $('#tblDataMxU tbody').on('click', 'tr', function () {
+            $("#tblDataMxU").find("tr").removeClass("warning");
             var id = this.id;
             var index = $.inArray(id, selected);
             if (index === -1) {
@@ -554,7 +545,7 @@ function getDataMyMicros()
             } else {
                 selected.splice(index, 1);
             }
-            $(this).toggleClass('warning'); 
+            $(this).toggleClass('warning');
         });
 
     });
@@ -582,7 +573,6 @@ function getMicrosByEstatus()
 /*******************************************************************************
  * Fin de procesos de Micro 
  * ****************************************************************************/
-
 
 /*******************************************************************************
  * Procesos de Plantas
@@ -899,15 +889,17 @@ function getDataPlantas()
     $.ajax({
         url: "abd/Data.php",
         type: "POST",
+        dataType: "JSON",
         data: {
             IdProcess: 26
         }
     }).done(function (data) {
-        $("#DataPlantas").html(data);
-        var tblDataPlantas = $("#tblDataPlantas").DataTable(tableOptions);
+        var tblName = "tblDataPlantas";
+        $("#DataPlantas").html(getTable(tblName, data));
+        var tblDataPlantas = $("#" + tblName).DataTable(tableOptions);
         //Get Row from supplier table
-        $('#tblDataPlantas tbody').on('click', 'tr', function () {
-            $("#tblDataPlantas").find("tr").removeClass("warning");
+        $('#' + tblName + ' tbody').on('click', 'tr', function () {
+            $("#" + tblName).find("tr").removeClass("warning");
             var id = this.id;
             var index = $.inArray(id, selected);
             if (index === -1) {
@@ -936,7 +928,6 @@ function getDataPlantas()
             $("#btnSavePlanta").addClass("disabled");
         });
     });
-
 }
 
 
@@ -952,7 +943,8 @@ function getDataFromMyPlants()
         url: "abd/Data.php",
         type: "POST",
         data: {
-            IdProcess: 42
+            IdProcess: 42,
+            DataTableName: "PxU"
         }
     }).done(function (data) {
         $("#DataMisPlantas").html(data);
@@ -971,7 +963,6 @@ function getDataFromMyPlants()
             $("#btnRemoveMyPlant").removeClass("disabled");
         });
     });
-
 }
 
 /*******************************************************************************
@@ -1201,15 +1192,17 @@ function getDataUsers()
     $.ajax({
         url: "abd/Data.php",
         type: "POST",
+        dataType: "JSON",
         data: {
             IdProcess: 18
         }
     }).done(function (data) {
-        $("#DataUser").html(data);
-        var tblDataUser = $("#tblDataUsers").DataTable(tableOptions);
+        var tblName = "tblDataUsers";
+        $("#DataUser").html(getTable(tblName, data));
+        var tblDataUser = $("#" + tblName).DataTable(tableOptions);
         //Get Row from supplier table
-        $('#tblDataUsers tbody').on('click', 'tr', function () {
-            $("#tblDataUsers").find("tr").removeClass("warning");
+        $('#' + tblName + ' tbody').on('click', 'tr', function () {
+            $("#" + tblName).find("tr").removeClass("warning");
             var id = this.id;
             var index = $.inArray(id, selected);
             if (index === -1) {
@@ -1293,16 +1286,17 @@ function getDataSuppliers()
     $.ajax({
         url: "abd/Data.php",
         type: "POST",
+        dataType: "JSON",
         data: {
             IdProcess: 17
         }
     }).done(function (data) {
-        $("#DataSupplier").html(data);
-
-        var tblSupplier = $("#tblDataSupplier").DataTable(tableOptions);
+        var tblName = "tblDataSupplier";
+        $("#DataSupplier").html(getTable(tblName, data));
+        var tblDataSupplier = $("#tblDataSupplier").DataTable(tableOptions);
         //Get Row from supplier table
-        $('#tblDataSupplier tbody').on('click', 'tr', function () {
-            $("#tblDataSupplier").find("tr").removeClass("warning");
+        $('#' + tblName + ' tbody').on('click', 'tr', function () {
+            $("#" + tblName).find("tr").removeClass("warning");
             var id = this.id;
             var index = $.inArray(id, selected);
             if (index === -1) {
@@ -1311,7 +1305,7 @@ function getDataSuppliers()
                 selected.splice(index, 1);
             }
             $(this).toggleClass('warning');
-            var dtm = tblSupplier.row(this).data();
+            var dtm = tblDataSupplier.row(this).data();
             temp = parseInt(dtm[0]);
             $("#txtProveedor").val(dtm[1]);
             $("#cmbEstatusPro").select2("val", dtm[2]);
@@ -1491,16 +1485,16 @@ function getDataZones()
     $.ajax({
         url: "abd/Data.php",
         type: "POST",
+        dataType: "JSON",
         data: {
             IdProcess: 20
         }
     }).done(function (data) {
-        $("#DataZones").html(data);
-        var tblZones = $("#tblDataZones").DataTable(tableOptions);
-
-        //Get Row from supplier table
-        $('#tblDataZones tbody').on('click', 'tr', function () {
-            $("#tblDataZones").find("tr").removeClass("warning");
+        var tblName = "tblDataZones";
+        $("#DataZones").html(getTable(tblName, data));
+        var tblZones = $("#" + tblName).DataTable(tableOptions);
+        $('#' + tblName + ' tbody').on('click', 'tr', function () {
+            $("#" + tblName).find("tr").removeClass("warning");
             var id = this.id;
             var index = $.inArray(id, selected);
             if (index === -1) {
@@ -1711,14 +1705,16 @@ function getDataSucursales()
     $.ajax({
         url: "abd/Data.php",
         type: "POST",
+        dataType: "JSON",
         data: {
             IdProcess: 28}
     }).done(function (data) {
-        $("#DataSucursal").html(data);
-        var tblSucursales = $("#tblDataSucursales").DataTable(tableOptions);
+        var tblName = "tblDataSucursales";
+        $("#DataSucursal").html(getTable(tblName, data));
+        var tblSucursales = $("#" + tblName).DataTable(tableOptions);
         //Get Row from supplier table
-        $('#tblDataSucursales tbody').on('click', 'tr', function () {
-            $("#tblDataSucursales").find("tr").removeClass("warning");
+        $('#' + tblName + ' tbody').on('click', 'tr', function () {
+            $("#" + tblName).find("tr").removeClass("warning");
             var id = this.id;
             var index = $.inArray(id, selected);
             if (index === -1) {
@@ -1941,15 +1937,17 @@ function getDataUxS()
     $.ajax({
         url: "abd/Data.php",
         type: "POST",
+        dataType: "JSON",
         data: {
             IdProcess: 36
         }
     }).done(function (data) {
-        $("#DataUxS").html(data);
-        var tblSupplier = $("#tblDataUxS").DataTable(tableOptions);
+        var tblName = "tblDataUxS";
+        $("#DataUxS").html(getTable(tblName, data));
+        var tblSupplier = $("#" + tblName).DataTable(tableOptions);
         //Get Row from supplier table
-        $('#tblDataUxS tbody').on('click', 'tr', function () {
-            $("#tblDataUxS").find("tr").removeClass("warning");
+        $('#' + tblName + ' tbody').on('click', 'tr', function () {
+            $("#" + tblName).find("tr").removeClass("warning");
             var id = this.id;
             var index = $.inArray(id, selected);
             if (index === -1) {
@@ -2190,15 +2188,17 @@ function getDataMicroToggle()
     $.ajax({
         url: "abd/Data.php",
         type: "POST",
+        dataType: "JSON",
         data: {
             IdProcess: 40
         }
     }).done(function (data) {
-        $("#DataMicroToggle").html(data);
-        var tblDataMicro = $("#tblDataMicrosToggle").DataTable(tableOptionsToggle);
+        var tblName = "tblDataMicrosToggle";
+        $("#DataMicroToggle").html(getTable(tblName, data));
+        var tblDataMicro = $("#" + tblName).DataTable(tableOptionsToggle);
         //Get Row from supplier table
-        $('#tblDataMicrosToggle tbody').on('click', 'tr', function () {
-            $("#tblDataMicrosToggle").find("tr").removeClass("warning");
+        $('#' + tblName + ' tbody').on('click', 'tr', function () {
+            $("#" + tblName).find("tr").removeClass("warning");
             var id = this.id;
             var index = $.inArray(id, selected);
             if (index === -1) {
@@ -2211,7 +2211,6 @@ function getDataMicroToggle()
             temp = dtm[0];
             $("#tblDataMicrosToggle").val(dtm[1]);
         });
-
     });
 }
 
@@ -2290,3 +2289,32 @@ var tableOptionsToggle = {
     "scrollCollapse": true,
     "aaSorting": [[0, 'desc']]
 };
+
+function getTable(tblname, data) {
+    var column = [];
+    var i = 0;
+    for (var key in data[i]) {
+        column.push(key);
+        i++;
+    }
+    var div = "<div class=\"table-responsive\">";
+    div = "<table id=\"" + tblname + "\" class=\"table table-bordered table-striped table-hover display\" cellspacing=\"0\" width=\"100%\">";
+    div += "<thead>";
+    div += "<tr class=\"info\">";
+    for (var index = 0; index < column.length; index++) {
+        div += "<th>" + column[index] + "</th>";
+    }
+    div += "</tr></thead>";
+    div += "<tbody>";
+    $.each(data, function (key, value) {
+        div += "<tr>";
+        $.each(value, function (key, value) {
+            div += "<td>" + value + "</td>";
+        });
+        div += "</tr>";
+    });
+    div += "</tbody>";
+    div += "</table>";
+    div += "</div>";
+    return div;
+}

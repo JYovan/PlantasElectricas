@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (isset($_SESSION["Sesion"])) {
-    include 'mdl/head.php';
-    include 'mdl/navbar.php';
+    include 'mdl/head.inc.php';
+    include 'mdl/navbar.inc.php';
     ?>  
     <!--Contenedor-->
     <section>
@@ -86,8 +86,8 @@ if (isset($_SESSION["Sesion"])) {
         </article>
     </section>
     <?php
-    include 'mdl/modals.php';
-    include 'mdl/footer.php';
+    include 'mdl/modals.inc.php';
+    include 'mdl/footer.inc.php';
 } else {
     header("Location: index.php");
 }

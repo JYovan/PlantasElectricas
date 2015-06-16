@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('mdl/head.php');
+include('mdl/head.inc.php');
 //include 'mdl/navbar.php';
 ?>    
 <body class="login-body">
@@ -60,4 +60,4 @@ include('mdl/head.php');
     </section>
 </body> 
 <?php
-include('mdl/footer.php');
+include('mdl/footer.inc.php');

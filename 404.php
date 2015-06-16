@@ -1,6 +1,6 @@
 <?php
-include './mdl/head.php';
-include './mdl/navbar.php';
+include './mdl/head.inc';
+include './mdl/navbar.inc';
 ?>
 <section>
     <article>

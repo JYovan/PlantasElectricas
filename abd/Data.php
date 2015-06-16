@@ -74,7 +74,8 @@ class Data {
                                 $pdo->bind("SP_GetDataFromUser", array($txtUsr, $txtPwd));
                                 break;
                             case 2:
-                                $pdo->fillbyParams("SP_GetHistoryFromPlantaAndUsr", array($txtPlanta), "History");
+//                                $pdo->fillbyParams("SP_GetHistoryFromPlantaAndUsr", array($txtPlanta), "History");
+                                $pdo->fillJSONbyParams("SP_GetHistoryFromPlantaAndUsr", array($txtPlanta));
                                 break;
                             case 3:
                                 $pdo->save("SP_AddUsers", array($txtUsr, $txtPwd, $txtClave, $txtEstatusUsr, $rTipoUser, $cmbProveedor));
@@ -126,17 +127,17 @@ class Data {
                             case 16:
                                 $pdo->save("SP_AddProveedor", array($txtProveedor, $txtEstatus));
                                 break;
-                            case 17:
-                                $pdo->fill("SP_GetAllProveedor", "Supplier");
+                            case 17: 
+                                $pdo->fillJSON("SP_GetAllProveedor");
                                 break;
-                            case 18:
-                                $pdo->fill("SP_GetAllUsers", "Users");
+                            case 18: 
+                                $pdo->fillJSON("SP_GetAllUsers");
                                 break;
                             case 19:
                                 $pdo->save("SP_UpdateProveedor", array($IdPro, $txtProveedor, $txtEstatus));
                                 break;
                             case 20:
-                                $pdo->fill("SP_GetZones", "Zones");
+                                $pdo->fillJSON("SP_GetZones");
                                 break;
                             case 21:
                                 $pdo->save("SP_AddZona", array($txtZona, $txtLat, $txtLon));
@@ -150,17 +151,17 @@ class Data {
                             case 24:
                                 $pdo->getDataFromArray("SP_GetFOBPlant", array($txtPlanta));
                                 break;
-                            case 25:
-                                $pdo->fill("SP_GetAllMicros", "Micros");
+                            case 25: 
+                                $pdo->fillJSON("SP_GetAllMicros");
                                 break;
-                            case 26:
-                                $pdo->fill("SP_GetAllPlantas", "Plantas");
+                            case 26: 
+                                $pdo->fillJSON("SP_GetAllPlantas");
                                 break;
                             case 27:
                                 $pdo->save("SP_UpdateMicro", array($IdMicro, $txtMicro, $txtEstatus));
                                 break;
-                            case 28:
-                                $pdo->fill("SP_GetAllSucursales", "Sucursales");
+                            case 28: 
+                                $pdo->fillJSON("SP_GetAllSucursales");
                                 break;
                             case 29:
                                 $pdo->save("SP_UpdateZona", array($IdZone, $txtZona, $txtLat, $txtLon));
@@ -187,8 +188,8 @@ class Data {
                             case 35:
                                 $pdo->save("SP_AddUxS", array($cmbUserxSucursal, $cmbSucursalesxUser));
                                 break;
-                            case 36:
-                                $pdo->fill("SP_GetAllUxS", "UxS");
+                            case 36: 
+                                $pdo->fillJSON("SP_GetAllUxS");
                                 break;
                             case 37:
                                 $pdo->fillOptions("SP_GetAllUsersByName");
@@ -200,7 +201,7 @@ class Data {
                                 $pdo->fillOptions("SP_GetAllZones");
                                 break;
                             case 40:
-                                $pdo->fill("SP_GetAllMicrosAvailables", "MicrosToggle");
+                                $pdo->fillJSON("SP_GetAllMicrosAvailables");
                                 break;
                             case 41:
                                 $pdo->save("SP_UpdateSucursal", array($IdSucursal));
@@ -209,6 +210,7 @@ class Data {
                                 session_start();
                                 if (isset($_SESSION["Usuario"])) {
                                     extract($_SESSION);
+                                    $pdo->fillbyParams("SP_GetPxU", array($Id, $Usuario), $DataTableName);
                                 }else{
                                     var_dump($_SESSION);
                                 }
@@ -217,9 +219,13 @@ class Data {
                                 session_start();
                                 if (isset($_SESSION["Usuario"])) {
                                     extract($_SESSION);
+                                    $pdo->fillbyParams("SP_GetAllMxU", array($Id, $Usuario), $DataTableName);
                                 }else{
                                     var_dump($_SESSION);
                                 }
+                                break;
+                            case 44:
+                                $pdo->fillJSON("SP_GetAllMicros");
                                 break;
                             default:
                                 break;

@@ -61,7 +61,7 @@ class PDODB {
             $procedure .=";";
             $stmt = $this->cnx->getConexion()->prepare($procedure);
             $stmt->execute($array);
-            if ($stmt) { 
+            if ($stmt) {
                 print '1';
             } else {
                 print "0";
@@ -91,7 +91,7 @@ class PDODB {
 //SELECT * FROM
     function fill($stored, $prefix) {
         try {
-            $columns =[];
+            $columns = [];
             $procedure = $stored;
             $stmt = $this->cnx->getConexion()->prepare($procedure);
             $rs = $stmt->execute();
@@ -186,9 +186,9 @@ class PDODB {
             if ($stmt) {
                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
                     foreach ($row as $value) {
-                    print '<option value="' . $value . '" >' . $value . '</option>';
-                    } 
-                } 
+                        print '<option value="' . $value . '" >' . $value . '</option>';
+                    }
+                }
             } else {
                 echo "Ha ocurrido un error inesperado";
             }
@@ -196,8 +196,8 @@ class PDODB {
             echo $exc->getTraceAsString();
         }
     }
-    
-    function fillOptionsByParams($stored,$array) {
+
+    function fillOptionsByParams($stored, $array) {
         try {
             $procedure = $stored . " ";
             for ($i = 1; $i <= count($array); $i++) {
@@ -213,7 +213,7 @@ class PDODB {
             if ($stmt) {
                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
                     print '<option value="' . $row->IdName . '" >' . $row->IdName . '</option>';
-                } 
+                }
             } else {
                 echo "Ha ocurrido un error inesperado";
             }
@@ -221,7 +221,6 @@ class PDODB {
             echo $exc->getTraceAsString();
         }
     }
- 
 
     function getDataFromArray($stored, $array) {
         try {
@@ -316,15 +315,78 @@ class PDODB {
         }
     }
 
-    function test() {
+    function fillJSON($stored) {
         try {
-            $stmt = $this->cnx->getConexion()->prepare("SP_GetDataFromUser ?, ?;");
-            $stmt->execute(array("Giovanni", "12345678"));
-            $result = $stmt->fetchall(PDO::FETCH_OBJ);
+            $json = array();
+            $procedure = $stored;
+            $stmt = $this->cnx->getConexion()->prepare($procedure);
+            $rs = $stmt->execute();
             if ($stmt) {
-                var_dump($result);
+                while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+                    array_push($json, $row);
+                }
+                header('Content-Type: application/json');
+                print json_encode($json);
             } else {
-//                print "no";
+                echo "<div>Ha ocurrido un error inesperado</div>";
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+
+    function fillJSONbyParams($stored, $array) {
+        try {
+            $json = array();
+            $procedure = $stored . " ";
+            for ($i = 1; $i <= count($array); $i++) {
+                if ($i == count($array)) {
+                    $procedure .="?";
+                } else {
+                    $procedure .="?,";
+                }
+            }
+            $procedure .=";";
+            $stmt = $this->cnx->getConexion()->prepare($procedure);
+            $rs = $stmt->execute($array);
+            if ($stmt) {
+                while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+                    array_push($json, $row);
+                }
+                header('Content-Type: application/json');
+                print json_encode($json);
+            } else {
+                echo "<div>Ha ocurrido un error inesperado</div>";
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+
+    function fillJSONHR($stored) {
+        try {
+            $jsonh = array();
+            $jsonr = array();
+            $dual = array();
+            $col;
+            $procedure = $stored;
+            $stmt = $this->cnx->getConexion()->prepare($procedure);
+            $rs = $stmt->execute();
+            if ($stmt) {
+                for ($index = 0; $index < $stmt->columnCount(); $index++) {
+                    $col = $stmt->getColumnMeta($index);
+                    $columns[] = $col['name'];
+                }
+                array_push($jsonh, $columns);
+                while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+                    array_push($jsonr, $row);
+                }
+                header('Content-Type: application/json');
+                array_push($dual, json_encode($jsonh));
+                array_push($dual, json_encode($jsonr));
+                print json_encode($dual);
+            } else {
+                echo "<div>Ha ocurrido un error inesperado</div>";
             }
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
