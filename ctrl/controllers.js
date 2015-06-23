@@ -2211,6 +2211,20 @@ function getDataMicroToggle()
             temp = dtm[0];
             $("#tblDataMicrosToggle").val(dtm[1]);
         });
+        
+        $('#'+ tblName + ' tfoot th').each( function () {
+        var title = $('#'+ tblName + '  thead th').eq( $(this).index() ).text();
+        $(this).html( '<input type="text" placeholder="Buscar '+title+'" />' );
+    } );
+        tblDataMicro.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            that
+                .search( this.value )
+                .draw();
+        } );
+    } );
     });
 }
 
@@ -2299,12 +2313,23 @@ function getTable(tblname, data) {
     }
     var div = "<div class=\"table-responsive\">";
     div = "<table id=\"" + tblname + "\" class=\"table table-bordered table-striped table-hover display\" cellspacing=\"0\" width=\"100%\">";
+    //Create header
     div += "<thead>";
     div += "<tr class=\"info\">";
     for (var index = 0; index < column.length; index++) {
         div += "<th>" + column[index] + "</th>";
     }
     div += "</tr></thead>";
+    //Create Footer
+    
+    div += "<tfoot>";
+    div += "<tr class=\"info\">";
+    for (var index = 0; index < column.length; index++) {
+        div += "<th>" + column[index] + "</th>";
+    }
+    div += "</tr></tfoot>";
+    
+    //Create Rows
     div += "<tbody>";
     $.each(data, function (key, value) {
         div += "<tr>";

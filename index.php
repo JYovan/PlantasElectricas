@@ -9,6 +9,7 @@ include('mdl/head.inc.php');
         if (!isset($_SESSION["Sesion"])) {
             ?> 
             <div align="center" class="well">
+                <div id="form-access">
                 <img src="img/ray_sm_red.png" class="img-responsive">
                 <form id="form-login" action="" method="post" class="">
                     <h4>Acceso</h4>
@@ -20,11 +21,12 @@ include('mdl/head.inc.php');
                     </div> 
                     <div class="wrapper">
                         <span class="group-btn">     
-                            <button type="submit" class="btn btn-success btn-lg">Entrar <i class="fa fa-sign-in"></i></button>  
+                            <button id="btnOnLogIn" type="submit" class="btn btn-success btn-lg">Entrar <i class="fa fa-sign-in"></i></button>  
                         </span>
-                    </div> 
-                    <div id="result"> 
-                        <br>
+                    </div>  
+                </form>
+                <br>
+                <div id="result"> 
                         <?php
                         if (isset($_REQUEST)) {
                             if (isset($_REQUEST["Cross"])) {
@@ -50,7 +52,7 @@ include('mdl/head.inc.php');
                             document.writeln("Resolución actual: " + screen.width + " x " + screen.height);
                         </script>           
                     </div> 
-                </form>
+                </div>
             </div>
             <?php
         } else {

@@ -1,6 +1,8 @@
-<?php  
+<?php
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
 /**
  * Helpers class
  * 
@@ -16,10 +18,11 @@ class Helpers {
     function is_ajax() {
         return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
     }
+
     function is_post() {
         return $_SERVER['REQUEST_METHOD'] == 'POST';
     }
-    
+
     function getMarker($sts) {
         return strtoupper($sts) == "ENCENDIDA" ? "success" : strtoupper($sts) == "DISPONIBLE" ? "success" : strtoupper($sts) == "EN USO" ? "success" : "danger";
     }
@@ -53,7 +56,8 @@ class Helpers {
     }
 
     function getCharts($options) {
-        $howmanychart = $options[0];
+        $howmanychart = 1;
+        $howmanylines = 3;
         $chart = "";
         $chart .="
 <script src='js/ChartJS/Chart.js'></script>
@@ -69,24 +73,23 @@ class Helpers {
                 $chart .="<hr>";
             }
         }
-        $chart .="
-</div>
-<script>  
+        $chart .="</div>
+    <script>  
             var randomScalingFactor = function(){ return Math.round(Math.random() * 100)};
             var lineChartData = {";
-        $array = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto");
+        $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre","Octubre","Noviembre","Diciembre");
         $labels = "labels: [";
-        for ($i = 0; $i <= count($array); $i++) {
-            if ($i == count($array)) {
+        for ($i = 0; $i <= count($meses); $i++) {
+            if ($i == count($meses)) {
                 $labels .="";
             } else {
-                $labels .="'" . $array[$i] . "',";
+                $labels .="'" . $meses[$i] . "',";
             }
         }
         $chart .= "$labels],";
 
         $chart .= "datasets : [";
-        for ($index2 = 0; $index2 < $howmanychart; $index2++) {
+        for ($index2 = 0; $index2 < $howmanylines; $index2++) {
             $color = array(rand(50, 255), rand(50, 255), rand(50, 255));
             $chart .="{
                     label: 'My $index2 dataset',
@@ -96,26 +99,33 @@ class Helpers {
                             pointStrokeColor : '#fff',
                             pointHighlightFill : '#fff',
                             pointHighlightStroke : 'rgba(" . $color[0] . "," . $color[1] . "," . $color[2] . ",1)',
-                            data : [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-                    }";
-            if ($index2 != $howmanychart) {
+                            data : [";
+            for ($indexx = 0; $indexx < count($meses); $indexx++) {
+                if ($indexx == count($meses)) {
+                    $chart .="randomScalingFactor()";
+                } else {
+                    $chart .="randomScalingFactor(), ";
+                }
+            }
+            $chart .=" ]}";
+            if ($index2 != $howmanylines) {
                 $chart.=",";
             }
         }
         $chart.="                     ]
          }";
         $chart .= "
-    function create(){";
-        for ($index1 = 0; $index1 < $howmanychart; $index1++) {
-            $chart .="var ctx$index1 = document.getElementById('myChart$index1').getContext('2d');
-            window.myLine = new Chart(ctx$index1).Line(lineChartData, {
-    responsive: true,
-    animateScale : true
-    });";
-        }
+        function create(){";
+            for ($index1 = 0; $index1 < $howmanychart; $index1++) {
+                $chart .="var ctx$index1 = document.getElementById('myChart$index1').getContext('2d');
+                window.myLine = new Chart(ctx$index1).Line(lineChartData, {
+                responsive: true,
+                animateScale : true
+            });";
+            }
         $chart.="  }  
-    create(); 
-</script>";
+        create(); 
+    </script>";
         print $chart;
     }
 }

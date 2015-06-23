@@ -66,8 +66,9 @@ if (isset($_SESSION["Sesion"])) {
                                         <div class="tab-pane fade" id="graphs"> 
                                             <div class="panel panel-success">
                                                 <div class="panel-heading"><span class="fa fa-area-chart"></span> Gr&aacute;fica en tiempo real</div>
+                                                 <button type="button" id="btnCharts"  name="btnChart"  class="btn btn-warning btn-sm"><span class="fa fa-history"></span> Actualizar grafica</button> 
                                                 <div class="panel-body" id="result-graph"> 
-                                                    <button type="button" id="btnCharts"  name="btnChart"  class="btn btn-success btn-sm"><span class="fa fa-history"></span> Actualizar grafica</button> 
+                                                   
                                                     <hr class="">  
                                                     <div id="chart-container" align="center">    
                                                         <h4>Seleccione una planta del mapa.</h4>    

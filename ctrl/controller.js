@@ -26,6 +26,7 @@ function getQueryVariable(variable) {
     }
 }
 function  onLoadData() {
+    $("#btnOnLogIn").fadeToggle("slow", "linear").fadeIn("slow").delay(5500);
     if (/^[a-zA-Z0-9\-_]{6,35}$/.test($("#txtUsr").val())
             && /^[a-zA-Z0-9\-_]{6,35}$/.test($("#txtPwd").val()))
     {

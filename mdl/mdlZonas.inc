@@ -68,10 +68,10 @@
                     <div class="modal-body">
   
                         <div class="form-group" align="center">
-                            <button type="button" id="btnUpdateMyZones" class="btn btn-warning disabled " data-dismiss=""><span class="fa fa-pencil"></span></button>   
+<!--                            <button type="button" id="btnUpdateMyZones" class="btn btn-warning disabled " data-dismiss=""><span class="fa fa-pencil"></span></button>   
                             <button type="button" id="btnUpdateTableMyZone" class="btn btn-default " data-dismiss=""> <span class="fa fa-refresh"></span> </button> 
                             <button type="button" id="btnRemoveMyZone" class="btn btn-default disabled " data-dismiss=""> <span class="fa fa-minus-circle"></span> </button>   
-                            <button type="button" id="btnCancelMyZone" class="btn btn-danger " data-dismiss=""><span class="fa fa-remove"></span></button>
+                            <button type="button" id="btnCancelMyZone" class="btn btn-danger " data-dismiss=""><span class="fa fa-remove"></span></button>-->
                         </div>
                         <div id="messages-of-my-zone"></div>  
                         <div id="DataMyZones"></div>

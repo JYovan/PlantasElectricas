@@ -150,3 +150,6 @@ tr:hover{
 td.highlight {
     background-color: whitesmoke !important;
 }
+tfoot {
+    display: table-header-group;
+}

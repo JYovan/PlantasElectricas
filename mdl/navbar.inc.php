@@ -1,4 +1,3 @@
-
 <?php
 if (isset($_SESSION["Sesion"])) {
     ?>
@@ -16,15 +15,15 @@ if (isset($_SESSION["Sesion"])) {
                             <span class="icon-bar"></span>
                         </button>
                     </div>
-
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">  
                         <ul class="nav navbar-nav navbar-right">
                             <li><a data-toggle="modal" data-target="#mdlUserAccount" ><span class="fa fa-hand-o-right"></span> Bienvenido: <?php echo (isset($_SESSION["Sesion"]) ? $_SESSION["Usuario"] : header("Location: index.php")); ?> </a></li>
                             <li><a data-toggle="modal" data-target="#mdlMyPlants"><span class="fa fa-plug"></span></a></li> 
                             <!--<li><a data-toggle="modal" data-target="#mdlMySuppliers"><span class="fa fa-ship"></span></a></li>-->  
                             <li><a data-toggle="modal" data-target="#mdlMyMicros"><span class="fa fa-gamepad"></span></a></li>  
-                            <li><a data-toggle="modal" data-target="#mdlMyZones"><span class="fa fa-thumb-tack"></span></a></li> 
-                            <li><a data-toggle="modal" data-target="#mdlMyBranchOffice"><span class="fa fa-bank"></span></a></li>  
+                            <!--<li><a data-toggle="modal" data-target="#mdlMyZones"><span class="fa fa-thumb-tack"></span></a></li>--> 
+                            <!--<li><a data-toggle="modal" data-target="#mdlMyBranchOffice"><span class="fa fa-bank"></span></a></li>-->  
+                            <?php if(isset($_SESSION["Tipo"]) && $_SESSION["Tipo"]=="Administrador") {?>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="# " id="themes"><span class="fa fa-gears"></span></a>
                                 <ul class="dropdown-menu" aria-labelledby="themes">
@@ -38,15 +37,14 @@ if (isset($_SESSION["Sesion"])) {
                                     <li class=""><a data-toggle="modal" data-target="#mdlUsuariosXSucursal"><span class="fa fa-wrench"></span> Usuarios por Sucursal</a></li>    
                                 </ul>
                             </li> 
-                            <li onclick="goOut();" ><a href="" onclick="goOut()"><span class="fa fa-arrow-right"></span></a></li>
+                            <?php } ?>
+                            <!--<li onclick="goOut();" ><a href="" onclick="goOut()"><span class="fa fa-arrow-right"></span></a></li>-->
                         </ul>
                     </div>
                 </nav>
             </div>
         </div>
     </div>
-    <div id="result-modules">
-
-    </div>
+    <div id="result-modules"></div>
     <?php
 } 

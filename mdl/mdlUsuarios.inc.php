@@ -132,13 +132,8 @@
                             <div class="col-xs-12 col-sm-8">
                                 <h2><?php echo (isset($_SESSION["Sesion"]) ? $_SESSION["Usuario"] : header("Location: index.php")); ?></h2>
                                 <p>
-                                    <strong>Tipo de usuario: </strong>  
-                                    <select class="form-control" id="cmbTipo" 
-                                            onchange="$('#cmbTipo').val().trim() ==='' ? $('#cmbTipo').select2('val',  '<?php print $_SESSION["Tipo"]; ?>'):$('#cmbTipo').val();" name="cmbTipo" required="">
-                                        <option></option>
-                                        <option>Administrador</option>
-                                        <option>Usuario</option>
-                                    </select> 
+                                    <strong>Tipo de usuario: </strong>   
+                                    <span class="label label-info tags"> <?php  print $_SESSION["Tipo"]; ?></span> 
                                      </p> 
                                 <p>
                                     <strong>Plantas asignadas: </strong>
